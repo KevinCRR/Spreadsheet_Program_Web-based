@@ -1,0 +1,33 @@
+.main-content-wrapper {
+  margin: auto;
+  width: 100%;
+}
+
+/* spreadsheet styling */
+#spreadsheet {
+  margin: 0;
+  height: 15%;
+  width: 60%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgb(0, 0, 0);
+}
+
+#spreadsheet th {
+  background-color: #d0d0d0;
+}
+
+#spreadsheet,
+th,
+td {
+  border: 1px solid rgb(0, 0, 0);
+  border-collapse: collapse;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* misc */
+.active {
+  background-color: #e0e0ff;
+}
