@@ -101,13 +101,21 @@ function selectColumn(colIndex) {
 
       colData[i] = $(col)
         .find("td")
-        .eq(colIndex - 1);
+        .eq(colIndex - 1)
+        .text();
 
-      console.log(colData[i]);
+      if (!colData[i]) {
+        i--;
+        colData.pop();
+      } else {
+        console.log(colData[i]);
+      }
       i++;
     });
 
-  jsonData = JSON.parse(colData);
+  console.log(colData);
+  jsonData = JSON.stringify(colData);
+  console.log(jsonData);
   getTableData();
 }
 
