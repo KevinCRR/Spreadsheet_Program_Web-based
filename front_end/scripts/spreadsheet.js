@@ -130,9 +130,9 @@ function selectColumn(colIndex) {
           letter: getGrade(value),
         });
 
-        for (const [key, value] of dict) {
-          console.log(key + ": " + value);
-        }
+        // for (const [key, value] of dict) {
+        //   console.log(key + ": " + value);
+        // }
         averages[getGrade(value)] = averages[getGrade(value)] + 1;
       }
       i++;
@@ -147,14 +147,46 @@ function selectColumn(colIndex) {
 
 // waits for the document to be fully loaded.
 $(document).ready(function () {
-  // accepts click of all th in the first row but not in the first column.
-  $("#spreadsheet tr:first th:not(:first-child)").click(function () {
-    selectColumn($(this).index());
-  });
+  var spreadsheet = document.getElementById("spreadsheet");
+  var students;
+  let row;
 
-  // accepts click of all th in all rows except for the first and returns the index of the parent row.
-  $("#spreadsheet tr:not(:first-child) th").click(function () {
-    selectRow($(this).parent().index());
+  var settings = {
+    url: "http://localhost:3000/",
+    method: "GET",
+    timeout: 0,
+  };
+
+  $.ajax(settings).done(function (response) {
+    console.log(response);
+    students = response;
+
+    for (var i = 0; i < students.length; i++) {
+      var student = students[i];
+
+      var headerCell = document.createElement("th");
+      row = spreadsheet.insertRow(-1);
+      headerCell.innerHTML = student.SID;
+      row.appendChild(headerCell);
+      var grd1Col = row.insertCell(-1);
+      var grd2Col = row.insertCell(-1);
+      var grd3Col = row.insertCell(-1);
+      var midtermCol = row.insertCell(-1);
+      grd1Col.innerText = student.Asmt1;
+      grd2Col.innerText = student.Asmt2;
+      grd3Col.innerText = student.Asmt1;
+      midtermCol.innerText = student.Midterm;
+    }
+
+    // accepts click of all th in the first row but not in the first column.
+    $("#spreadsheet tr:first th:not(:first-child)").click(function () {
+      selectColumn($(this).index());
+    });
+
+    // accepts click of all th in all rows except for the first and returns the index of the parent row.
+    $("#spreadsheet tr:not(:first-child) th").click(function () {
+      selectRow($(this).parent().index());
+    });
   });
 });
 
